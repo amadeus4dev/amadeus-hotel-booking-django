@@ -1,0 +1,56 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'demo/style.css' %}">
+    <meta charset="UTF-8">
+    <title>Amadeus Demo API</title>
+</head>
+<body>
+
+<h3 class="login-heading mb-4 mt-4 pl-3">{{ origin }}<br>Check-in: {{ departureDate }}<br>Check-out: {{ returnDate }}</h3>
+
+<div class="modal-body row">
+    <div class="col-md-12 offset-3">
+        <h3 class="login-heading mb-4 text-left">Properties returned</h3>
+        {% for r, hotel in response %}
+                <div class="card mb-3 text-center" style="max-width: 40rem;">
+                    <div class="nounderline card-header text-center" style="font-size: 26;color: darkred;">From ${{ r.price }}
+            <a href="{% url 'rooms_per_hotel' r.hotelID %}"><input class="ml-2 btn btn-warning btn-lg text-uppercase font-weight-normal mb-2" type="Submit" name="bookFlight" value="Show Rooms" /></a>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <h2 class="text-info">{{ r.name }}<span class="text-warning">
+                            {% if r.rating == '1' %} *
+                                {% elif r.rating == '2' %} **
+                                {% elif r.rating == '3' %} ***
+                                {% elif r.rating == '4' %} ****
+                                {% elif r.rating == '5' %} *****
+                            {% endif %}</span></h2>
+                            <div class="text-secondary">{{r.address}} - {{r.distance}}km from the city center</div>
+                            <div class="">{{r.description}}</div>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+</script>
+
+</body>
+</html>

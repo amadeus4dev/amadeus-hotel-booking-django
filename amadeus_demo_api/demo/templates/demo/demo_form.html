@@ -1,0 +1,80 @@
+{% load static %}
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'demo/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#inputOrigin").autocomplete({
+                source: "{% url 'city_search'%}",
+                minLength: 1,
+                delay: 200,
+            });
+        });
+    </script>
+    <title>Amadeus Hotel Booking</title>
+</head>
+
+<body>
+
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-lg-8 mx-auto">
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li class="text-danger">{% if message.tags %}{% endif %}{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+              <h3 class="login-heading mb-4">Amadeus Hotel Booking</h3>
+              <form action="" method="POST" id="form_id"> {% csrf_token %}
+                  <div class="form-label-group">
+                      <input type="text" name="Origin" id="inputOrigin"
+                             class="form-control" placeholder="Where do you go?" required autofocus>
+                      <label for="inputOrigin">Where do you go?</label>
+                  </div>
+
+                  <div class="form-label-group">
+                      <input type="date" name="Checkindate" id="idCheckindate"
+                             class="form-control" placeholder="Checkin Date" required>
+                      <label for="idCheckindate">Checkin Date</label>
+                  </div>
+
+                  <div class="form-label-group">
+                      <input type="date" name="Checkoutdate" id="idCheckoutdate"
+                             class="form-control" placeholder="Checkout Date" required>
+                      <label for="idCheckoutdate">Checkout Date</label>
+                  </div>
+                  <input class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="Submit" name="Submit" value="Search Hotel" />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $("#form_id").on("submit", function (e) {
+        e.preventDefault(); //stop submit event
+        var self = $(this);
+        var originGiven = $("#inputOrigin").val();
+        $("#inputOrigin").val(originGiven.slice(0,3));
+        $("#form_id").off("submit");
+        self.submit();
+    });
+    </script>
+</body>
