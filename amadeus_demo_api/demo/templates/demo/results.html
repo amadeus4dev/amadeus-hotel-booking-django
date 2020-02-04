@@ -9,15 +9,15 @@
 </head>
 <body>
 
-<h3 class="login-heading mb-4 mt-4 pl-3">{{ origin }}<br>Check-in: {{ departureDate }}<br>Check-out: {{ returnDate }}</h3>
+<h3 class="login-heading mb-4 mt-4 pl-3">Check-in: {{ departureDate }}<br>Check-out: {{ returnDate }}</h3>
 
 <div class="modal-body row">
     <div class="col-md-12 offset-3">
-        <h3 class="login-heading mb-4 text-left">Properties returned</h3>
+        <h3 class="login-heading mb-4 text-left">Properties returned for {{ origin }}</h3>
         {% for r, hotel in response %}
                 <div class="card mb-3 text-center" style="max-width: 40rem;">
                     <div class="nounderline card-header text-center" style="font-size: 26;color: darkred;">From ${{ r.price }}
-            <a href="{% url 'rooms_per_hotel' r.hotelID %}"><input class="ml-2 btn btn-warning btn-lg text-uppercase font-weight-normal mb-2" type="Submit" name="bookFlight" value="Show Rooms" /></a>
+            <a href="{% url 'rooms_per_hotel' r.hotelID departureDate returnDate %}"><input class="ml-2 btn btn-warning btn-lg text-uppercase font-weight-normal mb-2" type="Submit" name="bookFlight" value="Show Rooms" /></a>
                     </div>
                     <div class="card-body">
                         <div class="card-text">

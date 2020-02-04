@@ -57,24 +57,35 @@ def get_city_list(data):
     return json.dumps(result)
 
 
-def book_hotel(request, hotel):
+def book_hotel(request, offer_id):
     try:
-        r = amadeus.shopping.hotel_offers_by_hotel.get(hotelId=hotel).data
+        guests = [{'id': 1, 'name': {'title': 'MR', 'firstName': 'BOB', 'lastName': 'SMITH'},
+                   'contact': {'phone': '+33679278416', 'email': 'bob.smith@email.com'}}]
+
+        payments = {'id': 1, 'method': 'creditCard',
+                    'card': {'vendorCode': 'VI', 'cardNumber': '4151289722471370', 'expiryDate': '2021-08'}}
+        r = amadeus.booking.hotel_bookings.post(offer_id, guests, payments).data
     except ResponseError as error:
         messages.add_message(request, messages.ERROR, error.response.body)
         return render(request, 'demo/book_hotel.html', {})
     return render(request, 'demo/book_hotel.html', {'response': r})
 
 
-def rooms_per_hotel(request, hotel):
+def rooms_per_hotel(request, hotel, departureDate, returnDate):
     try:
-        rooms = amadeus.shopping.hotel_offers_by_hotel.get(hotelId=hotel).data
+        rooms = amadeus.shopping.hotel_offers_by_hotel.get(hotelId=hotel,
+                                                           checkInDate=departureDate,
+                                                           checkoutDate=returnDate).data
     except ResponseError as error:
         messages.add_message(request, messages.ERROR, error.response.body)
         return render(request, 'demo/rooms_per_hotel.html', {})
-    hotel_rooms = []
-    offer = Room(rooms).construct_room()
-    hotel_rooms.append(offer)
+    try:
+        hotel_rooms = []
+        offer = Room(rooms).construct_room()
+        hotel_rooms.append(offer)
+    except (TypeError, AttributeError) as error:
+        messages.add_message(request, messages.ERROR, error.response.body)
+        return render(request, 'demo/rooms_per_hotel.html', {})
     return render(request, 'demo/rooms_per_hotel.html', {'response': hotel_rooms,
                                                      'amenities': rooms['hotel']['amenities'],
                                                      'name': rooms['hotel']['name'],
