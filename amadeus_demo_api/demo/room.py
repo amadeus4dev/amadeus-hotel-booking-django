@@ -1,17 +1,13 @@
 class Room:
-    def __init__(self, room):
-        self.room = room
+    def __init__(self, rooms):
+        self.rooms = rooms
 
     def construct_room(self):
-        offer = {}
-        index = 0
-        try:
-            for r in self.room:
-                offer['id'] = self.room['offers'][index]['id']
-                offer['price'] = self.room['offers'][index]['price']['total']
-                offer['description'] = self.room['offers'][index]['room']['description']['text']
-                offer['offerID'] = self.room['offers'][index]['id']
-                index += 1
-        except IndexError:
-            pass
-        return offer
+        hotel_rooms = []
+        for room in self.rooms['offers']:
+            offer = {}
+            offer['price'] = room['price']['total']
+            offer['description'] = room['room']['description']['text']
+            offer['offerID'] = room['id']
+            hotel_rooms.append(offer)
+        return hotel_rooms

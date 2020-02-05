@@ -79,13 +79,7 @@ def rooms_per_hotel(request, hotel, departureDate, returnDate):
     except ResponseError as error:
         messages.add_message(request, messages.ERROR, error.response.body)
         return render(request, 'demo/rooms_per_hotel.html', {})
-    try:
-        hotel_rooms = []
-        offer = Room(rooms).construct_room()
-        hotel_rooms.append(offer)
-    except (TypeError, AttributeError) as error:
-        messages.add_message(request, messages.ERROR, error.response.body)
-        return render(request, 'demo/rooms_per_hotel.html', {})
+    hotel_rooms = Room(rooms).construct_room()
     return render(request, 'demo/rooms_per_hotel.html', {'response': hotel_rooms,
                                                      'amenities': rooms['hotel']['amenities'],
                                                      'name': rooms['hotel']['name'],
