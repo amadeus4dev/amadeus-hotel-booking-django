@@ -1,11 +1,9 @@
 import json
-import ast
 from amadeus import Client, ResponseError, Location
 from django.shortcuts import render
 from django.contrib import messages
 from .hotel import Hotel
 from .room import Room
-from .booking import Booking
 from django.http import HttpResponse
 
 amadeus = Client()
@@ -75,12 +73,15 @@ def rooms_per_hotel(request, hotel, departureDate, returnDate):
     try:
         rooms = amadeus.shopping.hotel_offers_by_hotel.get(hotelId=hotel,
                                                            checkInDate=departureDate,
-                                                           checkoutDate=returnDate).data
-    except ResponseError as error:
-        messages.add_message(request, messages.ERROR, error.response.body)
+                                                           checkOutDate=returnDate,
+                                                           paymentPolicy='GUARANTEE').data
+
+        hotel_rooms = Room(rooms).construct_room()
+        return render(request, 'demo/rooms_per_hotel.html', {'response': hotel_rooms,
+                                                         'amenities': rooms['hotel']['amenities'],
+                                                         'name': rooms['hotel']['name'],
+                                                         })
+    except (TypeError, AttributeError, ResponseError, KeyError) as error:
+        messages.add_message(request, messages.ERROR, error)
         return render(request, 'demo/rooms_per_hotel.html', {})
-    hotel_rooms = Room(rooms).construct_room()
-    return render(request, 'demo/rooms_per_hotel.html', {'response': hotel_rooms,
-                                                     'amenities': rooms['hotel']['amenities'],
-                                                     'name': rooms['hotel']['name'],
-                                                     })
+

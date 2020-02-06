@@ -4,10 +4,13 @@ class Room:
 
     def construct_room(self):
         hotel_rooms = []
-        for room in self.rooms['offers']:
-            offer = {}
-            offer['price'] = room['price']['total']
-            offer['description'] = room['room']['description']['text']
-            offer['offerID'] = room['id']
-            hotel_rooms.append(offer)
+        try:
+            for room in self.rooms['offers']:
+                offer = {}
+                offer['price'] = room['price']['total']
+                offer['description'] = room['room']['description']['text']
+                offer['offerID'] = room['id']
+                hotel_rooms.append(offer)
+        except (TypeError, AttributeError, KeyError):
+            pass
         return hotel_rooms
