@@ -11,7 +11,7 @@
 
 <h3 class="login-heading mb-4 mt-4 pl-3">{{ origin }}<br>{{ departureDate }}
 {% if returnDate %} <span class="text-info">&#10594&#10596</span> {{ returnDate }}{% endif %}</h3>
-
+{% if name %}
 <div class="modal-body row">
     <div class="col-md-12 offset-3">
         <h3 class="login-heading mb-4 text-left text-info">Rooms at {{name}}</h3>
@@ -29,6 +29,9 @@
         {% endfor %}
     </div>
 </div>
+{% else %}
+    <h3 class="text-info pl-2">None of the rooms accept credit card</h3>
+{% endif %}
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

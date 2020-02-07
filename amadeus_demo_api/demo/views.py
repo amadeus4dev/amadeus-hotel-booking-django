@@ -25,16 +25,20 @@ def demo(request):
             messages.add_message(request, messages.ERROR, error.response.body)
             return render(request, 'demo/demo_form.html', {})
         hotel_offers = []
-        for hotel in search_hotels.data:
-            offer = Hotel(hotel).construct_hotel()
-            hotel_offers.append(offer)
-            response = zip(hotel_offers, search_hotels.data)
+        try:
+            for hotel in search_hotels.data:
+                offer = Hotel(hotel).construct_hotel()
+                hotel_offers.append(offer)
+                response = zip(hotel_offers, search_hotels.data)
 
-        return render(request, 'demo/results.html', {'response': response,
-                                                     'origin': origin,
-                                                     'departureDate': checkinDate,
-                                                     'returnDate': checkoutDate,
-                                                     })
+            return render(request, 'demo/results.html', {'response': response,
+                                                         'origin': origin,
+                                                         'departureDate': checkinDate,
+                                                         'returnDate': checkoutDate,
+                                                         })
+        except UnboundLocalError:
+            messages.add_message(request, messages.ERROR, 'No results for your search.')
+            return render(request, 'demo/demo_form.html', {})
     return render(request, 'demo/demo_form.html', {})
 
 
