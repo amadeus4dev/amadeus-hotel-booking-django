@@ -7,8 +7,8 @@ ENV = \
 NS ?= amadeus4dev
 VERSION ?= latest
 
-IMAGE_NAME ?= flight-search-demo
-CONTAINER_NAME ?= flight-search-demo
+IMAGE_NAME ?= hotel-booking
+CONTAINER_NAME ?= hotel-booking
 CONTAINER_INSTANCE ?= default
 
 build: Dockerfile

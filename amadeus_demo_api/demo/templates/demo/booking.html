@@ -1,0 +1,30 @@
+{% load static %}
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'demo/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
+    <title>Your booking confirmation </title>
+
+</head>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li class="text-danger">{% if message.tags %}{% endif %}{{ message }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+    <div class="modal-body row">
+    <div class="col-md-12">
+            <h3 class="login-heading mb-4 text-left">Your Hotel Booking</h3>
+            <div class="login-heading mb-4 text-left">Status <span class="text-danger">Confirmed</span></div>
+            <div class="login-heading mb-4 text-left">ID: <span class="text-danger">{{ id }}</span></div>
+            <div class="login-heading mb-4 text-left">Provider Confirmation ID: <span class="text-danger">{{ providerConfirmationId }}</span></div>
+
+    </div>
+</div>
+{% endif %}

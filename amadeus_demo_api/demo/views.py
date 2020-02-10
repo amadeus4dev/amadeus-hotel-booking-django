@@ -61,16 +61,20 @@ def get_city_list(data):
 
 def book_hotel(request, offer_id):
     try:
+        offer_availability = amadeus.shopping.hotel_offer(offer_id).get()
         guests = [{'id': 1, 'name': {'title': 'MR', 'firstName': 'BOB', 'lastName': 'SMITH'},
                    'contact': {'phone': '+33679278416', 'email': 'bob.smith@email.com'}}]
 
         payments = {'id': 1, 'method': 'creditCard',
                     'card': {'vendorCode': 'VI', 'cardNumber': '4151289722471370', 'expiryDate': '2021-08'}}
-        r = amadeus.booking.hotel_bookings.post(offer_id, guests, payments).data
+        booking = amadeus.booking.hotel_bookings.post(offer_id, guests, payments).data
+        print(booking)
     except ResponseError as error:
         messages.add_message(request, messages.ERROR, error.response.body)
-        return render(request, 'demo/book_hotel.html', {})
-    return render(request, 'demo/book_hotel.html', {'response': r})
+        return render(request, 'demo/booking.html', {})
+    return render(request, 'demo/booking.html', {'id': booking[0]['id'],
+                                                 'providerConfirmationId': booking[0]['providerConfirmationId']
+                                                 })
 
 
 def rooms_per_hotel(request, hotel, departureDate, returnDate):
