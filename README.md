@@ -1,5 +1,12 @@
 # Amadeus Hotel Booking
 
+We recently released our hotel booking API to give you the chance to integrate booking capabilities directly in your application. In this prototype we demonstrate the end-to-end booking process, calling the following endpoints:
+* [Hotel Search](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-search/api-reference)
+    - GET /shopping/hotel-offers to find hotels
+    - GET /shopping/hotel-offers/by-hotel to view rooms given a hotel 
+    - GET /shopping/hotel-offers/{offerId} to confirm room availability
+* [Hotel Booking](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-booking/api-reference)
+    - POST /booking/hotel-bookings to book the room
 ## How to run the project via Docker (recommended)
 
 Build the image from the Dockerfile. The following command will 
