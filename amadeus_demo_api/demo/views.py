@@ -61,7 +61,7 @@ def get_city_list(data):
 
 def book_hotel(request, offer_id):
     try:
-        offer_availability = amadeus.shopping.hotel_offer(offer_id).get()
+        # offer_availability = amadeus.shopping.hotel_offer(offer_id).get()
         guests = [{'id': 1, 'name': {'title': 'MR', 'firstName': 'BOB', 'lastName': 'SMITH'},
                    'contact': {'phone': '+33679278416', 'email': 'bob.smith@email.com'}}]
 
