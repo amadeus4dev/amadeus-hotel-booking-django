@@ -68,7 +68,6 @@ def book_hotel(request, offer_id):
         payments = {'id': 1, 'method': 'creditCard',
                     'card': {'vendorCode': 'VI', 'cardNumber': '4151289722471370', 'expiryDate': '2021-08'}}
         booking = amadeus.booking.hotel_bookings.post(offer_id, guests, payments).data
-        print(booking)
     except ResponseError as error:
         messages.add_message(request, messages.ERROR, error.response.body)
         return render(request, 'demo/booking.html', {})
