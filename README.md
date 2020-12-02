@@ -65,7 +65,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-For authentication add your API key/secret to your `.bashrc` or `.zshrc` files.
+For authentication add your API key/secret to your environmental variables.
 
 ```sh
 export AMADEUS_CLIENT_ID=YOUR_API_KEY
