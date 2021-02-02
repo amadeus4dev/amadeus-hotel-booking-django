@@ -38,7 +38,7 @@ def demo(request):
                                                          'returnDate': checkoutDate,
                                                          })
         except UnboundLocalError:
-            messages.add_message(request, messages.ERROR, 'No results for your search.')
+            messages.add_message(request, messages.ERROR, 'No hotels found.')
             return render(request, 'demo/demo_form.html', {})
     return render(request, 'demo/demo_form.html', {})
 
