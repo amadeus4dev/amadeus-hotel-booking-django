@@ -47,7 +47,7 @@ def city_search(request):
         try:
             data = amadeus.reference_data.locations.get(keyword=request.GET.get('term', None), subType=Location.ANY).data
         except ResponseError as error:
-            messages.add_message(request, messages.ERROR, error)
+            messages.add_message(request, messages.ERROR, error.response.body)
     return HttpResponse(get_city_list(data), 'application/json')
 
 
@@ -89,6 +89,6 @@ def rooms_per_hotel(request, hotel, departureDate, returnDate):
                                                          'name': rooms['hotel']['name'],
                                                          })
     except (TypeError, AttributeError, ResponseError, KeyError) as error:
-        messages.add_message(request, messages.ERROR, error)
+        messages.add_message(request, messages.ERROR, error.response.body)
         return render(request, 'demo/rooms_per_hotel.html', {})
 
