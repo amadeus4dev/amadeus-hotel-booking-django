@@ -1,5 +1,5 @@
 alabaster==0.7.12
-amadeus==3.4.0
+amadeus==5.0.0
 args==0.1.0
 Babel==2.7.0
 certifi==2019.9.11

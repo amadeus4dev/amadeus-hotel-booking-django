@@ -20,6 +20,7 @@ def demo(request):
 
     if origin and checkinDate and checkoutDate:
         try:
+            # Hotel Search
             search_hotels = amadeus.shopping.hotel_offers.get(**kwargs)
         except ResponseError as error:
             messages.add_message(request, messages.ERROR, error.response.body)
@@ -45,7 +46,8 @@ def demo(request):
 def city_search(request):
     if request.is_ajax():
         try:
-            data = amadeus.reference_data.locations.get(keyword=request.GET.get('term', None), subType=Location.ANY).data
+            data = amadeus.reference_data.locations.get(keyword=request.GET.get('term', None),
+                                                        subType=Location.ANY).data
         except ResponseError as error:
             messages.add_message(request, messages.ERROR, error.response.body)
     return HttpResponse(get_city_list(data), 'application/json')
@@ -54,14 +56,15 @@ def city_search(request):
 def get_city_list(data):
     result = []
     for i, val in enumerate(data):
-        result.append(data[i]['iataCode']+', '+data[i]['name'])
+        result.append(data[i]['iataCode'] + ', ' + data[i]['name'])
     result = list(dict.fromkeys(result))
     return json.dumps(result)
 
 
 def book_hotel(request, offer_id):
     try:
-        # offer_availability = amadeus.shopping.hotel_offer(offer_id).get()
+        # Confirm availability and price
+        amadeus.shopping.hotel_offer(offer_id).get()
         guests = [{'id': 1, 'name': {'title': 'MR', 'firstName': 'BOB', 'lastName': 'SMITH'},
                    'contact': {'phone': '+33679278416', 'email': 'bob.smith@email.com'}}]
 
@@ -78,17 +81,15 @@ def book_hotel(request, offer_id):
 
 def rooms_per_hotel(request, hotel, departureDate, returnDate):
     try:
+        # Search for rooms in a given hotel
         rooms = amadeus.shopping.hotel_offers_by_hotel.get(hotelId=hotel,
                                                            checkInDate=departureDate,
-                                                           checkOutDate=returnDate,
-                                                           paymentPolicy='GUARANTEE').data
+                                                           checkOutDate=returnDate).data
 
         hotel_rooms = Room(rooms).construct_room()
         return render(request, 'demo/rooms_per_hotel.html', {'response': hotel_rooms,
-                                                         'amenities': rooms['hotel']['amenities'],
-                                                         'name': rooms['hotel']['name'],
-                                                         })
+                                                             'name': rooms['hotel']['name'],
+                                                             })
     except (TypeError, AttributeError, ResponseError, KeyError) as error:
-        messages.add_message(request, messages.ERROR, error.response.body)
+        messages.add_message(request, messages.ERROR, error)
         return render(request, 'demo/rooms_per_hotel.html', {})
-
