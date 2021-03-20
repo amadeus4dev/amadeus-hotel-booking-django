@@ -18,7 +18,7 @@ gunicorn==20.0.4
 idna==2.8
 imagesize==1.1.0
 importlib-metadata==0.23
-Jinja2==2.10.3
+Jinja2==2.11.3
 mamba==0.9.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
