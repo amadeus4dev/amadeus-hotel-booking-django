@@ -64,19 +64,19 @@ def book_hotel(request, offer_id):
         offer_availability = amadeus.shopping.hotel_offer(offer_id).get()
         if offer_availability.status_code == 200:
             guests = [{'id': 1, 'name': {'title': 'MR', 'firstName': 'BOB', 'lastName': 'SMITH'},
-                   'contact': {'phone': '+33679278416', 'email': 'bob.smith@email.com'}}]
+                       'contact': {'phone': '+33679278416', 'email': 'bob.smith@email.com'}}]
 
             payments = {'id': 1, 'method': 'creditCard',
-                    'card': {'vendorCode': 'VI', 'cardNumber': '4151289722471370', 'expiryDate': '2021-08'}}
+                        'card': {'vendorCode': 'VI', 'cardNumber': '4151289722471370', 'expiryDate': '2021-08'}}
             booking = amadeus.booking.hotel_bookings.post(offer_id, guests, payments).data
         else:
-            return render(request, 'demo/booking.html', {'response': 'The room is not available'})    
+            return render(request, 'demo/booking.html', {'response': 'The room is not available'})
     except ResponseError as error:
         messages.add_message(request, messages.ERROR, error.response.body)
-        return render(request, 'demo/booking.html', {})    
+        return render(request, 'demo/booking.html', {})
     return render(request, 'demo/booking.html', {'id': booking[0]['id'],
-                                             'providerConfirmationId': booking[0]['providerConfirmationId']
-                                             })
+                                                 'providerConfirmationId': booking[0]['providerConfirmationId']
+                                                 })
 
 
 def city_search(request):
@@ -94,4 +94,4 @@ def get_city_list(data):
     for i, val in enumerate(data):
         result.append(data[i]['iataCode'] + ', ' + data[i]['name'])
     result = list(dict.fromkeys(result))
-    return json.dumps(result)        
+    return json.dumps(result)
