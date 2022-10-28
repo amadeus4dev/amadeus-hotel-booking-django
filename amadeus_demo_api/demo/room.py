@@ -5,7 +5,7 @@ class Room:
     def construct_room(self):
         hotel_rooms = []
         try:
-            for room in self.rooms['offers']:
+            for room in self.rooms[0]['offers']:
                 offer = {}
                 offer['price'] = room['price']['total']
                 offer['description'] = room['room']['description']['text']

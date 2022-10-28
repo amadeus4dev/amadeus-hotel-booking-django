@@ -22,13 +22,6 @@
                     <div class="card-body">
                         <div class="card-text">
                             <h2 class="text-info">{{ r.name }}<span class="text-warning">
-                            {% if r.rating == '1' %} *
-                                {% elif r.rating == '2' %} **
-                                {% elif r.rating == '3' %} ***
-                                {% elif r.rating == '4' %} ****
-                                {% elif r.rating == '5' %} *****
-                            {% endif %}</span></h2>
-                            <div class="text-secondary">{{r.address}} - {{r.distance}}km from the city center</div>
                             <div class="">{{r.description}}</div>
                         </div>
                     </div>
