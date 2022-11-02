@@ -72,13 +72,14 @@ def rooms_per_hotel(request, hotel, departureDate, returnDate):
 
 def book_hotel(request, offer_id):
     try:
+        # Confirm availability of a given offer
         offer_availability = amadeus.shopping.hotel_offer_search(offer_id).get()
         if offer_availability.status_code == 200:
             guests = [{'id': 1, 'name': {'title': 'MR', 'firstName': 'BOB', 'lastName': 'SMITH'},
                        'contact': {'phone': '+33679278416', 'email': 'bob.smith@email.com'}}]
 
             payments = {'id': 1, 'method': 'creditCard',
-                        'card': {'vendorCode': 'VI', 'cardNumber': '4151289722471370', 'expiryDate': '2021-08'}}
+                        'card': {'vendorCode': 'VI', 'cardNumber': '4151289722471370', 'expiryDate': '2023-08'}}
             booking = amadeus.booking.hotel_bookings.post(offer_id, guests, payments).data
         else:
             return render(request, 'demo/booking.html', {'response': 'The room is not available'})
