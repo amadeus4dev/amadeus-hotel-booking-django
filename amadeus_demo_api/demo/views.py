@@ -8,7 +8,6 @@ from django.http import HttpResponse
 
 amadeus = Client()
 
-
 def demo(request):
     origin = request.POST.get('Origin')
     checkinDate = request.POST.get('Checkindate')
@@ -20,12 +19,25 @@ def demo(request):
 
     if origin and checkinDate and checkoutDate:
         try:
-            # Hotel Search
-            search_hotels = amadeus.shopping.hotel_offers.get(**kwargs)
+            # Hotel List
+            hotel_list = amadeus.reference_data.locations.hotels.by_city.get(cityCode=origin)
         except ResponseError as error:
             messages.add_message(request, messages.ERROR, error.response.body)
             return render(request, 'demo/demo_form.html', {})
         hotel_offers = []
+        hotel_ids = []
+        for i in hotel_list.data:
+            hotel_ids.append(i['hotelId'])
+        num_hotels = 40
+        kwargs = {'hotelIds': hotel_ids[0:num_hotels],
+            'checkInDate': request.POST.get('Checkindate'),
+            'checkOutDate': request.POST.get('Checkoutdate')}
+        try:
+            # Hotel Search
+            search_hotels = amadeus.shopping.hotel_offers_search.get(**kwargs)
+        except ResponseError as error:
+            messages.add_message(request, messages.ERROR, error.response.body)
+            return render(request, 'demo/demo_form.html', {})
         try:
             for hotel in search_hotels.data:
                 offer = Hotel(hotel).construct_hotel()
@@ -46,13 +58,12 @@ def demo(request):
 def rooms_per_hotel(request, hotel, departureDate, returnDate):
     try:
         # Search for rooms in a given hotel
-        rooms = amadeus.shopping.hotel_offers_by_hotel.get(hotelId=hotel,
+        rooms = amadeus.shopping.hotel_offers_search.get(hotelIds=hotel,
                                                            checkInDate=departureDate,
                                                            checkOutDate=returnDate).data
-
         hotel_rooms = Room(rooms).construct_room()
         return render(request, 'demo/rooms_per_hotel.html', {'response': hotel_rooms,
-                                                             'name': rooms['hotel']['name'],
+                                                             'name': rooms[0]['hotel']['name'],
                                                              })
     except (TypeError, AttributeError, ResponseError, KeyError) as error:
         messages.add_message(request, messages.ERROR, error)
@@ -61,13 +72,14 @@ def rooms_per_hotel(request, hotel, departureDate, returnDate):
 
 def book_hotel(request, offer_id):
     try:
-        offer_availability = amadeus.shopping.hotel_offer(offer_id).get()
+        # Confirm availability of a given offer
+        offer_availability = amadeus.shopping.hotel_offer_search(offer_id).get()
         if offer_availability.status_code == 200:
             guests = [{'id': 1, 'name': {'title': 'MR', 'firstName': 'BOB', 'lastName': 'SMITH'},
                        'contact': {'phone': '+33679278416', 'email': 'bob.smith@email.com'}}]
 
             payments = {'id': 1, 'method': 'creditCard',
-                        'card': {'vendorCode': 'VI', 'cardNumber': '4151289722471370', 'expiryDate': '2021-08'}}
+                        'card': {'vendorCode': 'VI', 'cardNumber': '4151289722471370', 'expiryDate': '2023-08'}}
             booking = amadeus.booking.hotel_bookings.post(offer_id, guests, payments).data
         else:
             return render(request, 'demo/booking.html', {'response': 'The room is not available'})
