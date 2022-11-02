@@ -6,7 +6,7 @@ With the Hotel Booking API you are able to integrate booking capabilities direct
 - Find the available prices with room details, descriptions and more using [Hotel Search API](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-search/api-reference)
 - Complete the booking using the [Hotel Booking](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-booking/api-reference)
 
-You also check out the [demo](https://amadeus4dev-hotel-booking.herokuapp.com/) as well.
+You also check out the [demo](https://web-production-b653.up.railway.app/book_hotel/DF2S7T6FRE) as well.
 
 ## How to run the project via Docker (recommended)
 
