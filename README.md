@@ -1,13 +1,11 @@
 # Amadeus Hotel Booking
 
-With the Hotel Booking API you are able to integrate booking capabilities directly in your application. In this prototype we demonstrate the end-to-end booking process, calling the following endpoints:
-* [Hotel Search](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-search/api-reference)
-    - GET /shopping/hotel-offers to find hotels
-    - GET /shopping/hotel-offers/by-hotel to view rooms given a hotel 
-    - GET /shopping/hotel-offers/{offerId} to confirm room availability
-* [Hotel Booking](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-booking/api-reference)
-    - POST /booking/hotel-bookings to book the room
-    
+With the Hotel Booking API you are able to integrate booking capabilities directly in your application. In this prototype we demonstrate the end-to-end booking process with the following flow: 
+
+- Find all available hotels in a given city or location using [Hotel List API](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-search/api-reference)
+- Find the available prices with room details, descriptions and more using [Hotel Search API](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-search/api-reference)
+- Complete the booking using the [Hotel Booking](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-booking/api-reference)
+
 You also check out the [demo](https://amadeus4dev-hotel-booking.herokuapp.com/) as well.
 
 ## How to run the project via Docker (recommended)
