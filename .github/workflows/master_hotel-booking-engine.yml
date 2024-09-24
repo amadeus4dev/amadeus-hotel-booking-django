@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://1a4devcontain.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_fb08a423f1b745eaa2eee7aad273a3c4 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_a2142f6363954571bc75bd21d3bdfe54 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_40b8cf5189014c0ca6ff80c6fc6abd98 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_1c102d3c7c9343d1ac45b762929a84bf }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: 1a4devcontain.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_fb08a423f1b745eaa2eee7aad273a3c4 }}/amadeushotelbookingdjango:${{ github.sha }}
+        tags: 1a4devcontain.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_40b8cf5189014c0ca6ff80c6fc6abd98 }}/amadeushotelbookingdjango:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'hotel-booking-engine'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_47cad4347c574369a22431166ac28e95 }}
-        images: '1a4devcontain.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_fb08a423f1b745eaa2eee7aad273a3c4 }}/amadeushotelbookingdjango:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_b47cc684f78546efbee0b71ddd7c72db }}
+        images: '1a4devcontain.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_40b8cf5189014c0ca6ff80c6fc6abd98 }}/amadeushotelbookingdjango:${{ github.sha }}'
