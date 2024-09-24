@@ -75,19 +75,57 @@ def book_hotel(request, offer_id):
         # Confirm availability of a given offer
         offer_availability = amadeus.shopping.hotel_offer_search(offer_id).get()
         if offer_availability.status_code == 200:
-            guests = [{'id': 1, 'name': {'title': 'MR', 'firstName': 'BOB', 'lastName': 'SMITH'},
-                       'contact': {'phone': '+33679278416', 'email': 'bob.smith@email.com'}}]
+            guests = [
+              {
+                  "tid": 1,
+                  "title": "MR",
+                  "firstName": "BOB",
+                  "lastName": "SMITH",
+                  "phone": "+33679278416",
+                  "email": "bob.smith@email.com"
+              }
+            ]
+            travel_agent = {
+                    "contact": {
+                        "email": "test@test.com"
+                    }   
+            }
+            
+            room_associations = [
+              {
+                  "guestReferences": [
+                      {
+                          "guestReference": "1"
+                      }
+                  ],
+                  "hotelOfferId": offer_id
+              }
+          ]
 
-            payments = {'id': 1, 'method': 'creditCard',
-                        'card': {'vendorCode': 'VI', 'cardNumber': '4151289722471370', 'expiryDate': '2027-08'}}
-            booking = amadeus.booking.hotel_bookings.post(offer_id, guests, payments).data
+            payment = {
+              "method": "CREDIT_CARD",
+              "paymentCard": {
+                  "paymentCardInfo": {
+                      "vendorCode": "VI",
+                      "cardNumber": "4151289722471370",
+                      "expiryDate": "2030-08",
+                      "holderName": "BOB SMITH"
+                  }
+              }
+          }
+            booking = amadeus.booking.hotel_orders.post(
+                guests=guests, 
+                travel_agent=travel_agent,
+                room_associations=room_associations,
+                payment=payment).data
         else:
             return render(request, 'demo/booking.html', {'response': 'The room is not available'})
     except ResponseError as error:
         messages.add_message(request, messages.ERROR, error.response.body)
         return render(request, 'demo/booking.html', {})
-    return render(request, 'demo/booking.html', {'id': booking[0]['id'],
-                                                 'providerConfirmationId': booking[0]['providerConfirmationId']
+    return render(request, 'demo/booking.html', {'pnr': booking['associatedRecords'][0]['reference'],
+                                                 'status': booking['hotelBookings'][0]['bookingStatus'],
+                                                 'providerConfirmationId': booking['hotelBookings'][0]['hotelProviderInformation'][0]['confirmationNumber']
                                                  })
 
 
