@@ -13,41 +13,27 @@ You also check out the [demo](https://hotel-booking-engine.azurewebsites.net/) a
 
 ## How to run the project via Docker (recommended)
 
+First you need to add your environment variales in an `.env` file, such as 
+
+```sh
+AMADEUS_CLIENT_ID=YOUR_API_KEY
+AMADEUS_CLIENT_SECRET=YOUR_API_SECRET
+```
+
 Build the image from the Dockerfile. The following command will 
 
 ```sh
-make
+podman build -t hotel-booking .
 ```
 
-The container receives your API key/secret from the environment variables.
-Before running the container, make sure your have your credentials correctly
-set:
-
+Then start the app
 ```sh
-export AMADEUS_CLIENT_ID=YOUR_API_KEY
-export AMADEUS_CLIENT_SECRET=YOUR_API_SECRET
+podman run --env-file .env -p 8000:8000 hotel-booking
 ```
 
-Finally, start the container from the image:
-
-```
-make run
-```
 
 At this point you can open a browser and go to `https://0.0.0.0:8000`.
 
-Note that it is also possible to run in detached mode so your terminal is still
-usable:
-
-```
-make start
-```
-
-Stop the container with:
-
-```
-make stop
-```
 
 ## How to run the project locally
 
