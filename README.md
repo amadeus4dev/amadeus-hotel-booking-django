@@ -23,12 +23,12 @@ AMADEUS_CLIENT_SECRET=YOUR_API_SECRET
 Build the image from the Dockerfile. The following command will 
 
 ```sh
-podman build -t hotel-booking .
+docker build -t hotel-booking .
 ```
 
 Then start the app
 ```sh
-podman run --env-file .env -p 8000:8000 hotel-booking
+docker run --env-file .env -p 8000:8000 hotel-booking
 ```
 
 
