@@ -1,8 +1,5 @@
 # Amadeus Hotel Booking
 
-![](screenshots/amadeus-hotel-booking-django-2.png)
-![](screenshots/amadeus-hotel-booking-django.png)
-
 With the Hotel Booking API you are able to integrate booking capabilities directly in your application. In this prototype we demonstrate the end-to-end booking process with the following flow: 
 
 - Find all available hotels in a given city or location using [Hotel List API](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-search/api-reference)
