@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <style>
+
+    </style>
     <script>
         $(document).ready(function () {
             $("#inputOrigin").autocomplete({
@@ -21,60 +24,64 @@
 
 <body>
 
-<div class="container-fluid">
-  <div class="row no-gutter">
-    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
-    <div class="col-md-8 col-lg-6">
-      <div class="login d-flex align-items-center py-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-9 col-lg-8 mx-auto">
-                {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <li class="text-danger">{% if message.tags %}{% endif %}{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-              <h3 class="login-heading mb-4">Book your stay</h3>
-              <form action="" method="POST" id="form_id"> {% csrf_token %}
-                  <div class="form-label-group">
-                      <input type="text" name="Origin" id="inputOrigin"
-                             class="form-control" placeholder="Where do you go?" required autofocus>
-                      <label for="inputOrigin">Where do you go?</label>
-                  </div>
+<!-- SVG as Background -->
+<svg class="svg-background" width="1440" height="810" viewBox="0 0 1440 810" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g opacity="0.5">
+  <path d="M719.999 657.957C734.969 657.957 749.039 663.785 759.626 674.371L894.078 808.823C904.664 819.41 910.492 833.48 910.492 848.45C910.492 863.42 904.664 877.49 894.078 888.076L759.626 1022.53C749.043 1033.11 734.969 1038.94 719.999 1038.94C705.029 1038.94 690.959 1033.11 680.373 1022.53L545.921 888.076C535.334 877.493 529.507 863.42 529.507 848.45C529.507 833.48 535.334 819.41 545.921 808.823L680.373 674.371C690.956 663.788 705.029 657.957 719.999 657.957ZM719.999 656.457C705.273 656.457 690.547 662.075 679.312 673.31L544.859 807.762C522.389 830.232 522.389 866.663 544.859 889.133L679.312 1023.59C690.547 1034.82 705.273 1040.44 719.999 1040.44C734.725 1040.44 749.452 1034.82 760.687 1023.59L895.139 889.133C917.609 866.663 917.609 830.232 895.139 807.762L760.687 673.31C749.452 662.075 734.725 656.457 719.999 656.457Z" fill="#000835"/>
+  </g>
+  <g opacity="0.5">
+  <path d="M720 373.762C732.367 373.762 744.423 376.109 755.831 380.733C767.643 385.522 778.241 392.56 787.331 401.65L1166.8 781.117C1175.89 790.207 1182.93 800.804 1187.71 812.617C1192.34 824.024 1194.69 836.08 1194.69 848.448C1194.69 860.815 1192.34 872.872 1187.71 884.279C1182.93 896.092 1175.89 906.689 1166.8 915.779L787.331 1295.25C778.241 1304.34 767.643 1311.37 755.831 1316.16C744.423 1320.79 732.367 1323.13 720 1323.13C707.632 1323.13 695.576 1320.79 684.168 1316.16C672.356 1311.37 661.758 1304.34 652.668 1295.25L273.202 915.779C264.112 906.689 257.073 896.092 252.285 884.279C247.657 872.872 245.313 860.815 245.313 848.448C245.313 836.08 247.661 824.024 252.285 812.617C257.073 800.804 264.112 790.207 273.202 781.117L652.668 401.65C661.758 392.56 672.356 385.522 684.168 380.733C695.576 376.105 707.632 373.762 720 373.762ZM720 372.262C695.246 372.262 670.492 381.704 651.607 400.589L272.141 780.055C234.367 817.829 234.367 879.07 272.141 916.84L651.607 1296.31C670.492 1315.19 695.246 1324.63 720 1324.63C744.753 1324.63 769.507 1315.19 788.392 1296.31L1167.86 916.84C1205.63 879.067 1205.63 817.825 1167.86 780.055L788.392 400.589C769.507 381.704 744.753 372.262 720 372.262Z" fill="#000835"/>
+  </g>
+  <g opacity="0.5">
+  <path d="M720 89.5645C737.456 89.5645 754.474 92.8757 770.576 99.4044C787.249 106.166 802.207 116.099 815.036 128.928L1439.52 753.408C1452.34 766.241 1462.28 781.199 1469.04 797.868C1475.57 813.971 1478.88 830.988 1478.88 848.444C1478.88 865.901 1475.57 882.918 1469.04 899.021C1462.28 915.693 1452.34 930.652 1439.52 943.481L815.036 1567.96C802.204 1580.79 787.245 1590.72 770.576 1597.48C754.474 1604.01 737.456 1607.32 720 1607.32C702.544 1607.32 685.526 1604.01 669.424 1597.48C652.751 1590.72 637.792 1580.79 624.964 1567.96L0.483578 943.481C-12.3489 930.648 -22.2789 915.689 -29.0402 899.021C-35.5689 882.918 -38.8802 865.901 -38.8802 848.444C-38.8802 830.988 -35.5689 813.971 -29.0402 797.868C-22.2789 781.196 -12.3452 766.237 0.483578 753.408L624.964 128.928C637.796 116.096 652.755 106.166 669.424 99.4044C685.526 92.8757 702.544 89.5645 720 89.5645ZM720 88.0645C685.219 88.0645 650.437 101.332 623.898 127.871L-0.581409 752.351C-53.6552 805.424 -53.6552 891.476 -0.581409 944.549L623.898 1569.03C650.437 1595.57 685.219 1608.84 720 1608.84C754.781 1608.84 789.562 1595.57 816.101 1569.03L1440.58 944.549C1493.65 891.476 1493.65 805.424 1440.58 752.351L816.101 127.871C789.562 101.332 754.781 88.0645 720 88.0645Z" fill="#000835"/>
+  </g>
+  <g opacity="0.5">
+  <path d="M719.999 -194.633C742.544 -194.633 764.523 -190.358 785.32 -181.92C806.853 -173.19 826.173 -160.358 842.744 -143.787L1712.24 725.707C1728.81 742.278 1741.64 761.598 1750.37 783.131C1758.81 803.928 1763.08 825.907 1763.08 848.452C1763.08 870.997 1758.81 892.976 1750.37 913.773C1741.64 935.306 1728.81 954.626 1712.24 971.197L842.744 1840.69C826.173 1857.26 806.853 1870.09 785.32 1878.82C764.523 1887.26 742.544 1891.53 719.999 1891.53C697.454 1891.53 675.475 1887.26 654.678 1878.82C633.145 1870.09 613.825 1857.26 597.254 1840.69L-272.24 971.197C-288.811 954.626 -301.64 935.306 -310.373 913.773C-318.807 892.976 -323.086 870.997 -323.086 848.452C-323.086 825.907 -318.811 803.928 -310.373 783.131C-301.643 761.598 -288.811 742.278 -272.24 725.707L597.254 -143.79C613.825 -160.362 633.145 -173.19 654.678 -181.924C675.475 -190.358 697.454 -194.637 719.999 -194.637M719.999 -196.137C675.19 -196.137 630.382 -179.044 596.193 -144.855L-273.301 724.642C-341.678 793.02 -341.678 903.877 -273.301 972.255L596.193 1841.75C630.382 1875.94 675.19 1893.03 719.999 1893.03C764.808 1893.03 809.617 1875.94 843.805 1841.75L1713.3 972.255C1781.68 903.877 1781.68 793.02 1713.3 724.642L843.809 -144.852C809.62 -179.04 764.812 -196.133 720.003 -196.133L719.999 -196.137Z" fill="#000835"/>
+  </g>
+  <g opacity="0.5">
+  <path d="M720 -478.83C733.616 -478.83 747.288 -477.521 760.638 -474.934C774.116 -472.324 787.38 -468.394 800.066 -463.249C826.458 -452.546 850.14 -436.819 870.45 -416.509L1984.96 697.999C2005.27 718.309 2020.99 741.99 2031.7 768.382C2036.84 781.069 2040.77 794.332 2043.38 807.81C2045.97 821.16 2047.28 834.832 2047.28 848.449C2047.28 862.065 2045.97 875.737 2043.38 889.087C2040.77 902.565 2036.84 915.829 2031.7 928.515C2020.99 954.907 2005.27 978.589 1984.96 998.902L870.45 2113.41C850.14 2133.72 826.458 2149.45 800.066 2160.15C787.38 2165.29 774.116 2169.22 760.638 2171.83C747.288 2174.42 733.616 2175.73 720 2175.73C706.383 2175.73 692.711 2174.42 679.361 2171.83C665.883 2169.22 652.62 2165.29 639.933 2160.15C613.541 2149.45 589.859 2133.72 569.546 2113.41L-544.962 998.902C-565.272 978.592 -580.999 954.911 -591.702 928.515C-596.847 915.829 -600.777 902.565 -603.387 889.087C-605.97 875.737 -607.283 862.065 -607.283 848.449C-607.283 834.832 -605.974 821.16 -603.387 807.81C-600.777 794.332 -596.847 781.069 -591.702 768.382C-580.999 741.99 -565.272 718.309 -544.962 697.999L569.55 -416.509C589.86 -436.819 613.541 -452.546 639.937 -463.249C652.623 -468.394 665.887 -472.324 679.365 -474.934C692.715 -477.518 706.387 -478.83 720.003 -478.83M720.003 -480.33C665.167 -480.33 610.331 -459.409 568.488 -417.57L-546.019 696.937C-629.697 780.615 -629.697 916.286 -546.019 999.964L568.488 2114.47C610.327 2156.31 665.163 2177.23 720.003 2177.23C774.843 2177.23 829.676 2156.31 871.518 2114.47L1986.03 999.964C2069.7 916.286 2069.7 780.615 1986.03 696.937L871.515 -417.57C829.676 -459.409 774.84 -480.33 720 -480.33H720.003Z" fill="#000835"/>
+  </g>
+  </svg>
+  
 
-                  <div class="form-label-group">
-                      <input type="date" name="Checkindate" id="idCheckindate"
-                             class="form-control" placeholder="Checkin Date" required>
-                      <label for="idCheckindate">Checkin Date</label>
-                  </div>
-
-                  <div class="form-label-group">
-                      <input type="date" name="Checkoutdate" id="idCheckoutdate"
-                             class="form-control" placeholder="Checkout Date" required>
-                      <label for="idCheckoutdate">Checkout Date</label>
-                  </div>
-                  <input class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="Submit" name="Submit" value="Search Hotel" />
-              </form>
+<div class="container-fluid center-content">
+    <div class="form-container">
+        <!-- Form Content Here -->
+        <h3 class="login-heading mb-4">Book your stay</h3>
+        <form action="" method="POST" id="form_id"> {% csrf_token %}
+            <div class="form-label-group">
+                <input type="text" name="Origin" id="inputOrigin"
+                       class="form-control" placeholder="Where do you go?" required autofocus>
+                <label for="inputOrigin">Where do you go?</label>
             </div>
-          </div>
-        </div>
-      </div>
+
+            <div class="form-label-group">
+                <input type="date" name="Checkindate" id="idCheckindate"
+                       class="form-control" placeholder="Checkin Date" required>
+                <label for="idCheckindate">Checkin Date</label>
+            </div>
+
+            <div class="form-label-group">
+                <input type="date" name="Checkoutdate" id="idCheckoutdate"
+                       class="form-control" placeholder="Checkout Date" required>
+                <label for="idCheckoutdate">Checkout Date</label>
+            </div>
+            <input class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="Submit" name="Submit" value="Search Hotel" />
+        </form>
     </div>
-  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
-        $("#form_id").on("submit", function (e) {
+<script>
+    $("#form_id").on("submit", function (e) {
         e.preventDefault(); //stop submit event
         var self = $(this);
         var originGiven = $("#inputOrigin").val();
-        $("#inputOrigin").val(originGiven.slice(0,3));
+        $("#inputOrigin").val(originGiven.slice(0, 3));
         $("#form_id").off("submit");
         self.submit();
     });
-    </script>
+</script>
 </body>
+</html>
