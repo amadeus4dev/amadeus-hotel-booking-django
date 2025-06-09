@@ -6,8 +6,6 @@ With the Hotel Booking API you are able to integrate booking capabilities direct
 - Find the available prices with room details, descriptions and more using [Hotel Search API](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-search/api-reference)
 - Complete the booking using the [Hotel Booking](https://developers.amadeus.com/self-service/category/hotel/api-doc/hotel-booking/api-reference)
 
-You also check out the [demo](https://hotel-booking-engine.azurewebsites.net/) as well.
-
 ## How to run the project via Docker (recommended)
 
 First you need to add your environment variales in an `.env` file, such as 
